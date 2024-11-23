@@ -21,10 +21,10 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds_config/lede23.feeds.conf.default
-  CONFIG_FILE: config/lede_config/2305_x64_gxnas.config
+  CONFIG_FILE: config/lede_config/2305_x64_Merthen301.config
   CONFIGS: config/lede_config
-  DIY_P1_SH: diy_script/lede_diy/x86/2305_x64_gxnas_diy-part1.sh
-  DIY_P2_SH: diy_script/lede_diy/x86/2305_x64_gxnas_diy-part2.sh
+  DIY_P1_SH: diy_script/lede_diy/x86/2305_x64_Merthen301_diy-part1.sh
+  DIY_P2_SH: diy_script/lede_diy/x86/2305_x64_Merthen301_diy-part2.sh
   CLASH_KERNEL: amd64
   UPLOAD_BIN_DIR: false
   UPLOAD_CONFIG: true
@@ -40,7 +40,7 @@ jobs:
     env:
       REPO_URL_Lede: https://github.com/coolsnowwolf/lede
       REPO_BRANCH_Lede: master
-      REPO_PATH_Lede : "2305_x64_gxnas"
+      REPO_PATH_Lede : "2305_x64_Merthen301"
     outputs:
       output: ${{ steps.outputunifreq.outputs.unifreq }}
     steps:
@@ -49,20 +49,20 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL_Lede -b $REPO_BRANCH_Lede $REPO_PATH_Lede
         cd $REPO_PATH_Lede
-        echo "commitHash_2305_x64_gxnas=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        echo "commitHash_2305_x64_Merthen301=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
         cd
 
     - name: Show Commit Head and Combination Heads
       id: combHeader
       run: |
-        echo "commitHash_2305_x64_gxnas: ${{ steps.getHash.outputs.commitHash_2305_x64_gxnas }}"
+        echo "commitHash_2305_x64_Merthen301: ${{ steps.getHash.outputs.commitHash_2305_x64_Merthen301 }}"
 
     - name: Compare Commit Hash
       id: cacheHash
       uses: actions/cache@main
       with:
-        path: .commitHash_2305_x64_gxnas
-        key: HEAD-${{ steps.getHash.outputs.commitHash_2305_x64_gxnas }}
+        path: .commitHash_2305_x64_Merthen301
+        key: HEAD-${{ steps.getHash.outputs.commitHash_2305_x64_Merthen301 }}
 
     - name: Set output for next job
       id: outputunifreq
@@ -73,7 +73,7 @@ jobs:
     - name: Save New Commit Hash
       if: steps.cacheHash.outputs.cache-hit != 'true'
       run: |
-        echo ${{ steps.getHash.outputs.commitHash_2305_x64_gxnas }} | tee .commitHash_2305_x64_gxnas
+        echo ${{ steps.getHash.outputs.commitHash_2305_x64_Merthen301 }} | tee .commitHash_2305_x64_Merthen301
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////
   Build_2305_x64_Merthen301:
     needs: [CheckRepo]
